@@ -1,0 +1,30 @@
+Sub WeeklyReport_hide無姓名列()
+'
+'B欄是用來填顧問名字的地方，若是B欄無資料或為零，則將該列隱藏
+
+sheetsnumber = InputBox("輸入欲連續作用的頁面數量(必須連續排列)")
+
+For Count = 1 To sheetsnumber
+    
+    For I = 1 To ActiveSheet.UsedRange.Rows.Count
+    
+    If Cells(I, "B").Rows.Hidden = True Then
+    Else
+        If Cells(I, "B").Value = "0" Or Cells(I, "B").Value = "0" Then
+        Range("B" & I).EntireRow.Hidden = True
+        End If
+    End If
+    Next
+
+    Dim ii As Integer
+      ii = Worksheets.Count
+      If ActiveSheet.Index < ii Then
+          Worksheets(ActiveSheet.Index + 1).Activate
+      Else
+          Worksheets(1).Activate
+      End If
+
+Next Count
+
+    
+End Sub
