@@ -1,8 +1,7 @@
 Sub ClientInvoice()
 '
-' ClientInvoice Macro
-'
-'
+'計算各sheet的B欄中 不重複的種類有幾個
+
     Sheets.Add After:=Sheets(Sheets.Count)
     Sheets(Sheets.Count).Name = "client"
     For I = 1 To Worksheets.Count
