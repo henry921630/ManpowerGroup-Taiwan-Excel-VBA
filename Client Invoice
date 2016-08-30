@@ -1,0 +1,15 @@
+Sub ClientInvoice()
+'
+' ClientInvoice Macro
+'
+'
+    Sheets.Add After:=Sheets(Sheets.Count)
+    Sheets(Sheets.Count).Name = "client"
+    For I = 1 To Worksheets.Count
+    
+    lastrow = Sheets(I).[B65536].End(xlUp).Row
+    Cells(I, 1) = Sheets(I).Name
+    Cells(I, 2) = "=IFERROR(SUMPRODUCT(1/COUNTIF('" & Sheets(I).Name & "'!B1:B" & lastrow & ",'" & Sheets(I).Name & "'!B1:B" & lastrow & ")),""N/A"")"
+        
+    Next
+End Sub
