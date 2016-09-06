@@ -1,0 +1,47 @@
+Sub ServRep()
+'
+' ServRep Macro
+'用於處理PB匯出的資料，轉成便於套用Excel樞紐分析的格式
+
+'
+    Range("N10").Select
+    ActiveCell.FormulaR1C1 = "=IF(R[-1]C[-13]=""Serv Rep :"",R[-1]C[-12],""XXX"")"
+    Range("N10").Select
+    Selection.Copy
+    Range(Selection, Selection.End(xlDown)).Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+    Calculate
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Selection.Replace What:="XXX", Replacement:="", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Selection.SpecialCells(xlCellTypeBlanks).Select
+    Application.CutCopyMode = False
+    Selection.FormulaR1C1 = "=R[-1]C"
+    ActiveWindow.SmallScroll Down:=-33
+    Calculate
+    Selection.Copy
+    Columns("N:N").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Range("A9").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("N10").Select
+    ActiveSheet.Paste
+    
+    
+    Range("G:G").Select
+    Selection.Delete
+    Range("E:E").Select
+    Selection.Delete
+    
+    Range("A10:L" & [L10].End(xlDown).Row).Select
+    Selection.Copy
+    
+End Sub
