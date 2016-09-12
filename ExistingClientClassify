@@ -1,0 +1,133 @@
+Sub MASCM()
+'
+' 在D欄與E欄給出一個關鍵字分類清單
+' 然後根據使用者所輸入欲分類之項目，比對A欄的清單進行分類，註記於C欄並套色
+
+'
+op = InputBox("MA Or SCM")
+If op = "SCM" Then
+
+n = 2
+    Columns("A:A").Select
+For i = 1 To 100
+    Set a = Selection.Find(What:=Cells(n, "E"), After:=ActiveCell, LookIn:=xlFormulas, _
+        LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+        MatchCase:=False, MatchByte:=False, SearchFormat:=False)
+
+    
+                If Not a Is Nothing Then
+                        firstaddress = a.Address
+                        a.Activate
+                        
+                        Application.CutCopyMode = False
+                        With a.Interior
+                            .Pattern = xlSolid
+                            .PatternColorIndex = xlAutomatic
+                            .ThemeColor = 5
+                            .TintAndShade = 0.599993896298105
+                            .PatternTintAndShade = 0
+                        End With
+                        Cells(a.Row, 3) = "SCM"
+                        
+                        
+                        
+                                Do
+                                    
+                                    Set a = Selection.FindNext(After:=ActiveCell)
+                                        
+                                            If Not a Is Nothing Then
+                                                        a.Activate
+                                                        
+                                                        Application.CutCopyMode = False
+                                                        With a.Interior
+                                                            .Pattern = xlSolid
+                                                            .PatternColorIndex = xlAutomatic
+                                                            .ThemeColor = 5
+                                                            .TintAndShade = 0.599993896298105
+                                                            .PatternTintAndShade = 0
+                                                        End With
+                                                
+                                            End If
+                                    Cells(a.Row, 3) = "SCM"
+                                    
+                                Loop Until firstaddress = a.Address
+                End If
+                
+     n = n + 1
+    If n > 20 Then Exit For
+    
+Next
+
+
+Else
+
+
+                            With Cells(1, "C").Interior
+                            .Pattern = xlSolid
+                            .PatternColorIndex = xlAutomatic
+                            .ThemeColor = 6
+                            .TintAndShade = 0.599993896298105
+                            .PatternTintAndShade = 0
+                            End With
+                            
+n = 2
+    Columns("A:A").Select
+For i = 1 To 100
+
+    
+
+
+    
+    Set a = Selection.Find(What:=Cells(n, "D"), After:=ActiveCell, LookIn:=xlFormulas, _
+        LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+        MatchCase:=False, MatchByte:=False, SearchFormat:=False)
+
+    
+                If Not a Is Nothing Then
+                        firstaddress = a.Address
+                        a.Activate
+                        
+                        Application.CutCopyMode = False
+                        With a.Interior
+                            .Pattern = xlSolid
+                            .PatternColorIndex = xlAutomatic
+                            .ThemeColor = 6
+                            .TintAndShade = 0.599993896298105
+                            .PatternTintAndShade = 0
+                        End With
+                        
+                        Cells(a.Row, 3) = "MA"
+                        
+                        
+                                Do
+                                    
+                                    Set a = Selection.FindNext(After:=ActiveCell)
+                                        
+                                            If Not a Is Nothing Then
+                                                        a.Activate
+                                                        
+                                                        Application.CutCopyMode = False
+                                                        With a.Interior
+                                                            .Pattern = xlSolid
+                                                            .PatternColorIndex = xlAutomatic
+                                                            .ThemeColor = 6
+                                                            .TintAndShade = 0.599993896298105
+                                                            .PatternTintAndShade = 0
+                                                        End With
+                                                
+                                            End If
+                                            
+                                    Cells(a.Row, 3) = "MA"
+                                Loop Until firstaddress = a.Address
+                End If
+     
+    
+    n = n + 1
+    If n > 19 Then Exit For
+    
+Next
+
+
+End If
+
+End Sub
