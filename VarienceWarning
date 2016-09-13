@@ -1,0 +1,51 @@
+Public Sub 顯著提示()
+
+Dim TargetRow As Integer
+Dim n As String
+
+n = InputBox("請輸入週別序號")
+If n < 10 Then n = "0" & n  '十位數補零
+
+WeekNo = "wk" & n
+PreWeekNo = "wk" & n - 1
+
+
+ActiveWorkbook.Sheets(1).Activate
+TargetRow = WorksheetFunction.Match(WeekNo, Range("A:A"), 0)
+PreRow = WorksheetFunction.Match(PreWeekNo, Range("A:A"), 0)
+
+
+For s = 1 To Sheets.Count '爬梳各部門
+If Sheets(s).Name > 100 And Sheets(s).Name < 999 Then
+Sheets(s).Activate
+
+
+LastCol = Range("A1").SpecialCells(xlLastCell).Column   '未必是真的最後一格，只是按ctrl+End找到的那一格
+
+
+
+For i = 7 To LastCol
+
+    If Cells(3, i) = "Contract" Or Cells(3, i) = "Payroll" Then '第三列是各部門Contract/Payroll的標題列  (ALL的在第二列，待處理)
+        If Cells(TargetRow, i) <> "" And Cells(TargetRow, i) <> 0 And Cells(TargetRow - 1, i) <> 0 And Cells(TargetRow - 1, i) <> "" Then
+        If Abs((Cells(TargetRow, i) - Cells(PreRow, i))) > 8 And Abs((Cells(TargetRow, i) - Cells(PreRow, i)) / Cells(PreRow, i)) > 0.07 Then  '變動人數大於8 且 變動率大於7%，即特別列出
+        
+            If Cells(2, i) = "" Then
+            Company = Cells(2, i - 1)
+            Else
+            Company = Cells(2, i)
+            End If
+            
+            
+            x = PrintSum(Cells(1, 1), Company, Cells(3, i), (Cells(TargetRow, i) - Cells(PreRow, i)), (Cells(TargetRow, i) - Cells(PreRow, i)) / Cells(PreRow, i))
+            'MsgBox "alert:" & i
+    
+        End If
+        End If
+    End If
+
+Next
+End If
+Next '爬梳各部門結束
+
+End Sub
